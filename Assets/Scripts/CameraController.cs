@@ -22,9 +22,9 @@ public class CameraController : MonoBehaviour
 
         if (Input.GetKeyDown("e"))
         {
-            float distCovered = (Time.time - startTime) * speed;
-            float fracJourney = distCovered / journeyLength;
-            prefab.transform.position = Vector3.Slerp(startMarker.position, endMarker.position, fracJourney);
+          //  float distCovered = (Time.time - startTime) * speed;
+          //  float fracJourney = distCovered / journeyLength;
+          //  prefab.transform.position = Vector3.Slerp(startMarker.position, endMarker.position, fracJourney);
         }
     }
 }

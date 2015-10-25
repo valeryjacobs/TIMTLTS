@@ -1,4 +1,5 @@
 ﻿using SignalR.Client._20.Hubs;
+using System;
 using UnityEngine;
 
 public class SignalRController : MonoBehaviour
@@ -30,7 +31,14 @@ public class SignalRController : MonoBehaviour
             {
                 Debug.Log("signalR called us back");
             };
-            _hubConnection.Start();
+            try
+            {
+                _hubConnection.Start();
+            }
+            catch(Exception ex)
+            {
+
+            }
         }
         else
             Debug.Log("Signalr already connected...");

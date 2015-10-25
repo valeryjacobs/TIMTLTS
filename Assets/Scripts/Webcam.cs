@@ -3,16 +3,16 @@ using System.Collections;
 
 public class Webcam : MonoBehaviour {
 
-    WebCamTexture webcam;
+	WebCamTexture webcam;
 	// Use this for initialization
 	void Start () {
-        webcam = new WebCamTexture("Microsoft LifeCam Front");
+		webcam = new WebCamTexture("Microsoft LifeCam HD-6000");//"Microsoft LifeCam HD-6000");// "Microsoft LifeCam Front");
 
-        Renderer rend = GetComponent<Renderer>();
+		Renderer rend = GetComponent<Renderer>();
 
-        rend.material.mainTexture = webcam;
+		rend.material.mainTexture = webcam;
 
-        webcam.Play();
+		webcam.Play();
 
 	}
 	
