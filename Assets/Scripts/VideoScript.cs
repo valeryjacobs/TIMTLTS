@@ -8,9 +8,9 @@ public class VideoScript : MonoBehaviour {
 	public Renderer rend;
 	// Use this for initialization
 	void Start () {
-		rend = GetComponent<Renderer>();
-		rend.material.mainTexture = movie as MovieTexture;
-		movie.Play();
+		//rend = GetComponent<Renderer>();
+		//rend.material.mainTexture = movie as MovieTexture;
+		//movie.Play();
 	}
 	
 

@@ -6,11 +6,11 @@ public class SlideScript : MonoBehaviour
 {
     public string pathTemplate;
     Renderer rend;
-    int slideIndex = 0;
+    public int slideIndex = 0;
     // Use this for initialization
     void Start()
     {
-
+        SetSlide();
     }
 
     // Update is called once per frame
