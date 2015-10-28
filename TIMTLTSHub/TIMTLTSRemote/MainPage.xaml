@@ -8,6 +8,32 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Button Click="Button_Click">Execute</Button>
+        <Grid.Resources>
+            <Style TargetType="Button">
+                <Setter Property="FontSize" Value="22"></Setter>
+                <Setter Property="Margin" Value="10"></Setter>
+            </Style>
+        </Grid.Resources>
+        <StackPanel>
+            <StackPanel VerticalAlignment="Top" Orientation="Horizontal" >
+                <Button Click="Button_Click">Full2Perspective</Button>
+                <Button x:Name="Slide2Table" Click="Slide2Table_Click">Slide2Table</Button>
+                <Button x:Name="Table2Slide" Click="Table2Slide_Click">Table2Slide</Button>
+                <Button x:Name="Table2Clock" Click="Table2Clock_Click">Table2Clock</Button>
+                <Button x:Name="Table2Demo" Click="Table2Demo_Click">Table2Demo</Button>
+                <Button x:Name="Demo2Table" Click="Table2Demo_Click">Demo2Table</Button>
+                <Button x:Name="Slide2Demo" Click="Slide2Demo_Click">Slide2Demo</Button>
+            </StackPanel>
+            <StackPanel>
+                <Button x:Name="Demo1" Click="Demo1_Click">Demo1</Button>
+                <Button x:Name="Demo2" Click="Demo2_Click">Demo2</Button>
+                <Button x:Name="Demo3" Click="Demo3_Click">Demo3</Button>
+            </StackPanel>
+            <StackPanel>
+                <TextBox x:Name="rate"></TextBox>
+                <Button x:Name="submitRate" Click="submitRate_Click">Submit rate</Button>
+            </StackPanel>
+        </StackPanel>
+
     </Grid>
 </Page>

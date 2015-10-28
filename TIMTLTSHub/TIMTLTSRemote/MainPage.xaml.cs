@@ -27,7 +27,9 @@ namespace TIMTLTSRemote
     {
         private HubConnection hubConnection;
         private IHubProxy proxy;
-        private Subscription _subscription;
+        private HubConnection qmhubConnection;
+        private IHubProxy qmproxy;
+
         public MainPage()
         {
             this.InitializeComponent();
@@ -38,20 +40,26 @@ namespace TIMTLTSRemote
         private async void Init()
         {
             hubConnection = new HubConnection("http://localhost:5225");
-
             proxy = hubConnection.CreateHubProxy("MyHub");
-            //_subscription = proxy.Subscribe("addMessage");
-
-            //_subscription.Received += _subscription_Received;
-
             await hubConnection.Start();
 
-
-            // proxy.On("UpdateStockPrice", stock => Debug );
-
-            proxy.On<string,object >("addMessage", (source, payload) =>
+            proxy.On<string>("executeCommand", (data) =>
             {
-                Debug.WriteLine(source + " : " + payload);
+                Debug.WriteLine(data);
+               // var message = Newtonsoft.Json.JsonConvert.DeserializeObject<Message>(data.ToString());
+            });
+
+            qmhubConnection = new HubConnection("http://quantifymewebhub.azurewebsites.net/");
+            qmproxy = qmhubConnection.CreateHubProxy("QuantifyMeHub");
+            await qmhubConnection.Start();
+
+            qmproxy.On<string,string>("send", (name, data) =>
+            {
+                Debug.WriteLine(data);
+                var message = new Message { Source = "RemoteUWP", Action = "UpdateData", Value = data };
+
+                proxy.Invoke("Send", Newtonsoft.Json.JsonConvert.SerializeObject(message));
+
             });
         }
 
@@ -62,8 +70,79 @@ namespace TIMTLTSRemote
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            var json = "{" + string.Format("\"action\": \"{0}\", \"value\": {1}", "methodName", "messageContent") + "}";
-            proxy.Invoke("Send", "RemoteClient", json);
+            var message = new Message { Source = "RemoteUWP", Action = "Animate", Value = "Full2Perspective" };
+            
+            proxy.Invoke("Send", Newtonsoft.Json.JsonConvert.SerializeObject(message));
         }
+
+        private void Slide2Table_Click(object sender, RoutedEventArgs e)
+        {
+            var message = new Message { Source = "RemoteUWP", Action = "Animate", Value = "Slide2Table" };
+
+            proxy.Invoke("Send", Newtonsoft.Json.JsonConvert.SerializeObject(message));
+        }
+
+        private void Table2Clock_Click(object sender, RoutedEventArgs e)
+        {
+            var message = new Message { Source = "RemoteUWP", Action = "Animate", Value = "Table2Clock" };
+
+            proxy.Invoke("Send", Newtonsoft.Json.JsonConvert.SerializeObject(message));
+        }
+
+        private void Table2Demo_Click(object sender, RoutedEventArgs e)
+        {
+            var message = new Message { Source = "RemoteUWP", Action = "Animate", Value = "Table2Demo" };
+
+            proxy.Invoke("Send", Newtonsoft.Json.JsonConvert.SerializeObject(message));
+        }
+
+        private void Slide2Demo_Click(object sender, RoutedEventArgs e)
+        {
+            var message = new Message { Source = "RemoteUWP", Action = "Animate", Value = "Slide2Demo" };
+
+            proxy.Invoke("Send", Newtonsoft.Json.JsonConvert.SerializeObject(message));
+        }
+
+        private void Table2Slide_Click(object sender, RoutedEventArgs e)
+        {
+            var message = new Message { Source = "RemoteUWP", Action = "Animate", Value = "Table2Slide" };
+
+            proxy.Invoke("Send", Newtonsoft.Json.JsonConvert.SerializeObject(message));
+        }
+
+        private void Demo1_Click(object sender, RoutedEventArgs e)
+        {
+            var message = new Message { Source = "RemoteUWP", Action = "Demo", Value = "Demo1" };
+
+            proxy.Invoke("Send", Newtonsoft.Json.JsonConvert.SerializeObject(message));
+        }
+
+        private void Demo2_Click(object sender, RoutedEventArgs e)
+        {
+            var message = new Message { Source = "RemoteUWP", Action = "Demo", Value = "Demo2" };
+
+            proxy.Invoke("Send", Newtonsoft.Json.JsonConvert.SerializeObject(message));
+        }
+
+        private void Demo3_Click(object sender, RoutedEventArgs e)
+        {
+            var message = new Message { Source = "RemoteUWP", Action = "Demo", Value = "Demo3" };
+
+            proxy.Invoke("Send", Newtonsoft.Json.JsonConvert.SerializeObject(message));
+        }
+
+        private void submitRate_Click(object sender, RoutedEventArgs e)
+        {
+            var message = new Message { Source = "RemoteUWP", Action = "UpdateData", Value = rate.Text };
+
+            proxy.Invoke("Send", Newtonsoft.Json.JsonConvert.SerializeObject(message));
+        }
+    }
+
+    public class Message
+    {
+        public string Source { get; set; }
+        public string Action { get; set; }
+        public string Value { get; set; }
     }
 }

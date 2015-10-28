@@ -28,10 +28,10 @@ namespace TIMTLTSHub
     }
     public class MyHub : Hub
     {
-        public void Send(string name, string message)
+        public void Send(string message)
         {
-            Console.WriteLine(name + " " + message);
-            Clients.All.addMessage(name, message);
+            Console.WriteLine(message);
+            Clients.All.executeCommand(message);
         }
     }
 }
